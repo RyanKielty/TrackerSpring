@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        h1 {text-align:center}
+        body {margin: 0 auto 16px auto}
+        body {border: 1px solid #000}
+        body {width: 320px}
+        body {padding: 16px}
+        p {font-size: 12px;}
+    </style>
+</head>
+<body>
+{{^user}}
+Please Enter:
+<form action="/login" method="post">
+    <input type="text" placeholder="Username" name="userName"/>
+    <input type="password" placeholder="Password" name="password"/>
+    <button type="submit">Login</button>
+</form>
+<br>
+{{/user}}
+
+{{#user}}
+<h3>
+    Hi {{name}}!<br>
+    <form action="/logout" method="post"><br>
+        <button type="submit">Logout</button>
+    </form>
+</h3>
+<h1>
+    Album Tracker:
+</h1>
+<br>
+
+
+Fill the album information below:
+<br><br>
+<form action="/add-album" method="post">
+    <input type="text" placeholder="Title" name="albumTitle" required/><br>
+    <input type="text" placeholder="Artist" name="albumArtist" required/><br>
+    <input type="text" placeholder="Release Year" name="albumReleaseYear"/><br>
+    <button type="submit">Add Album</button>
+</form>
+<br>
+<form action="/update-album" method="post">
+    <input type="text" placeholder="ID #" name="id" /><br>
+    <input type="text" placeholder="Title" name="albumTitle"/><br>
+    <input type="text" placeholder="Artist" name="albumArtist"/><br>
+    <input type="text" placeholder="Release Year" name="albumReleaseYear"/><br>
+    <button type="submit">Make a Change</button>
+</form>
+<br>
+<br>
+<ul>
+    {{#albums}}
+    <li>
+        <b>Album:</b> {{albumTitle}}<br>
+        <b>Artist:</b> {{albumArtist}}<br>
+        <b>Year:</b> {{albumReleaseYear}}<br>
+        <p>ID #: {{id}}</p>
+        <form action="/remove-album" method="post">
+            <input type="hidden" value="{{id}}" name="id"/><br>
+            <button type="submit">Listened</button>
+        </form>
+        <br>
+    </li>
+    {{/albums}}
+</ul>
+
+
+{{/user}}
+</body>
+</html>
